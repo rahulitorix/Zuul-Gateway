@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: zuul-proxy
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+zuul:
+  routes:
+    commercial:
+      path: /v1/commercial/**
+      url: http://35.162.152.203:6081
+      stripPrefix: false
+    industrial:
+      path: /v1/industrial/**
+      url: http://35.162.152.203:6082
+      stripPrefix: false
+    residential:
+      path: /v1/residential/**
+      url: http://35.162.152.203:6083
+      stripPrefix: false
+    service:
+      path: /service/**
+      url: http://localhost:8090
+      stripPrefix: false
+  host:
+    socket-timeout-millis: 30000
+apibuilder:
+    authz:
+      path:
+        "https://cdl-ctpo.apiwiz.io/v1/auth"
